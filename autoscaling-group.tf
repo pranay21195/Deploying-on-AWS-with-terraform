@@ -1,12 +1,12 @@
 resource "aws_autoscaling_group" "asg" {
   provider                  = aws.region-master
-  name                      = "launch-instance-${aws_launch_template.lc.latest_version}"
+  name                      = "launch-instance-${aws_launch_template.launch-template.latest_version}"
   health_check_type         = "EC2"
   health_check_grace_period = 120
   termination_policies      = ["OldestInstance"]
   launch_template {
-    id      = aws_launch_template.lc.id
-    version = aws_launch_template.lc.latest_version
+    id      = aws_launch_template.launch-template.id
+    version = aws_launch_template.launch-template.latest_version
   }
   min_size = 1
   max_size = 5
@@ -14,7 +14,8 @@ resource "aws_autoscaling_group" "asg" {
   lifecycle {
     create_before_destroy = true
   }
-  target_group_arns = [aws_lb_target_group.svc.arn]
+ target_group_arns = [aws_lb_target_group.app-lb-tg.arn]
+  
 
 }
 # scailing policy
@@ -50,7 +51,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_high_alarm" {
   statistic           = "Average"
   threshold           = "80"
   actions_enabled     = true
-  alarm_actions       = ["${aws_autoscaling_policy.cpu_high.arn}"]
+  alarm_actions       = ["${aws_autoscaling_policy.agents-scale-up.arn}"]
   dimensions = {
     "AutoScalingGroupName" = "${aws_autoscaling_group.asg.name}"
   }
@@ -66,7 +67,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_low_alarm" {
   statistic           = "Average"
   threshold           = "10"
   actions_enabled     = true
-  alarm_actions       = ["${aws_autoscaling_policy.cpu_low.arn}"]
+  alarm_actions       = ["${aws_autoscaling_policy.agents-scale-up.arn}"]
   dimensions = {
     "AutoScalingGroupName" = "${aws_autoscaling_group.asg.name}"
   }
