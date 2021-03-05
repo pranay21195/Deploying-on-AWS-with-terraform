@@ -1,4 +1,4 @@
-data "aws_availability_zones" "available" {
+data "aws_availability_zones" "all" {
   provider = aws.region-master
   state    = "available"
 }

@@ -1,7 +1,8 @@
 resource "aws_instance" "backendserver" {
   provider      = aws.region-master
   ami           = var.webserver-ami
-  instance_type = "t2.micro"
+  count         = var.instance-count-backend
+  instance_type = var.instance-type
   # VPC
   subnet_id = aws_subnet.subnet_2.id
   # Security Group
@@ -30,7 +31,7 @@ resource "aws_instance" "backendserver" {
 resource "aws_instance" "frontendserver" {
   provider      = aws.region-master
   ami           = var.webserver-ami
-  instance_type = "t2.micro"
+  instance_type = var.instance-type
   # VPC
   subnet_id                   = aws_subnet.subnet_1.id
   associate_public_ip_address = true

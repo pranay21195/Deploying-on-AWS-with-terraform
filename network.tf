@@ -35,21 +35,21 @@ resource "aws_subnet" "subnet_1" {
 }
 
 #create subnet #2 in ap-south-1
-resource "aws_subnet" "subnet_2" {
+resource "aws_subnet" "subnet_3" {
   provider          = aws.region-master
   availability_zone = element(data.aws_availability_zones.azs.names, 1)
   vpc_id            = aws_vpc.vpc_master.id
-  cidr_block        = "10.0.2.0/24"
+  cidr_block        = "10.0.3.0/24"
   tags = {
     Name = "Private-subnet"
   }
 }
 #create subnet #1 in ap-south-1
-resource "aws_subnet" "subnet_11" {
+resource "aws_subnet" "subnet_2" {
   provider          = aws.region-master
   availability_zone = element(data.aws_availability_zones.azs.names, 2)
   vpc_id            = aws_vpc.vpc_master.id
-  cidr_block        = "10.0.3.0/24"
+  cidr_block        = "10.0.2.0/24"
   tags = {
     Name = "Public-subnet-2"
   }
@@ -77,7 +77,7 @@ resource "aws_route_table_association" "prod-crta-public-subnet-1" {
 }
 resource "aws_route_table_association" "prod-crta-public-subnet-11" {
   provider       = aws.region-master
-  subnet_id      = aws_subnet.subnet_11.id
+  subnet_id      = aws_subnet.subnet_2.id
   route_table_id = aws_route_table.prod-public-crt.id
 }
 

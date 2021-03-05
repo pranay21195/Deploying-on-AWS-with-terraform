@@ -21,15 +21,12 @@ variable "instance-type" {
   type    = string
   default = "t2.micro"
 }
-variable "instance-count" {
+variable "instance-count-backend" {
   type    = number
   default = 1
 
 }
-# key variable for refrencing 
-variable "key_name" {
-  default = "mastercard"
-}
+
 # base_path for refrencing
 variable "base_path" {
   default = "/home/ec2-user/mastercard"

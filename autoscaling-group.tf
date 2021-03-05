@@ -14,8 +14,8 @@ resource "aws_autoscaling_group" "asg" {
   lifecycle {
     create_before_destroy = true
   }
- target_group_arns = [aws_lb_target_group.app-lb-tg.arn]
-  
+  target_group_arns = [aws_lb_target_group.app-lb-tg.arn]
+
 
 }
 # scailing policy

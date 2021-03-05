@@ -4,7 +4,7 @@ resource "aws_lb" "application-lb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.frontend-sg.id]
-  subnets            = [aws_subnet.subnet_1.id, aws_subnet.subnet_11.id]
+  subnets            = [aws_subnet.subnet_1.id, aws_subnet.subnet_2.id]
   tags = {
     Name = "Frontend-LB"
   }
