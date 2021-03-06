@@ -1,8 +1,10 @@
+Deploying on AWS with terrafrom
+
 Backend:
-defining version to be supported for terraforma and S3 bucket for terraformstate file.
+defining version to be supported for terraform and S3 bucket for terraformstate file.
 
 Varibales:
-1. Master region = ap-south-1
+1. Default Master region = ap-south-1
 2. Amazion Linux AMi = "ami-0eeb03e72075b9bcc"
 3. Instance type = "t2-micro"
 
