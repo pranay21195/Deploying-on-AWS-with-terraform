@@ -8,8 +8,9 @@ resource "aws_autoscaling_group" "asg" {
     id      = aws_launch_template.launch-template.id
     version = aws_launch_template.launch-template.latest_version
   }
-  min_size = 1
-  max_size = 5
+  vpc_zone_identifier = [aws_subnet.subnet_1.id, aws_subnet.subnet_2.id]
+  min_size            = 1
+  max_size            = 5
 
   lifecycle {
     create_before_destroy = true

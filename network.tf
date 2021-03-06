@@ -37,7 +37,7 @@ resource "aws_subnet" "subnet_1" {
 #create subnet #2 in ap-south-1
 resource "aws_subnet" "subnet_3" {
   provider          = aws.region-master
-  availability_zone = element(data.aws_availability_zones.azs.names, 1)
+  availability_zone = element(data.aws_availability_zones.azs.names, 0)
   vpc_id            = aws_vpc.vpc_master.id
   cidr_block        = "10.0.3.0/24"
   tags = {
@@ -47,7 +47,7 @@ resource "aws_subnet" "subnet_3" {
 #create subnet #1 in ap-south-1
 resource "aws_subnet" "subnet_2" {
   provider          = aws.region-master
-  availability_zone = element(data.aws_availability_zones.azs.names, 2)
+  availability_zone = element(data.aws_availability_zones.azs.names, 1)
   vpc_id            = aws_vpc.vpc_master.id
   cidr_block        = "10.0.2.0/24"
   tags = {

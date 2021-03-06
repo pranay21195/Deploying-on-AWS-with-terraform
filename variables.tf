@@ -21,11 +21,6 @@ variable "instance-type" {
   type    = string
   default = "t2.micro"
 }
-variable "instance-count-backend" {
-  type    = number
-  default = 1
-
-}
 
 # base_path for refrencing
 variable "base_path" {
@@ -50,4 +45,3 @@ variable "public_subnet_cidr_blocks" {
     "10.0.3.0/24",
   ]
 }
-
