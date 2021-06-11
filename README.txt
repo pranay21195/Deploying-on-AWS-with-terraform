@@ -1,4 +1,4 @@
-Deploying on AWS with terrafrom
+Deploying on AWS with terraform
 
 Backend:
 defining version to be supported for terraform and S3 bucket for terraformstate file.
@@ -19,10 +19,13 @@ VPC:
 1. VPC in master region with CIDR block 10.0.0.0/16
 2. Consist of 2 Public subnets and 1 private
 
+Nat Gateway:
+egress only for backend instance to connect internet for updates
+
 Instances:
 1. Frontend server serving web appliccation with user data
 2. Backend serevr for database.
-3. Using SSH key 'mastercard11'
+3. Using SSH key 'zetakp'
 
 Appliccation Load Balancer:
 1. attached to frontend-sg 
