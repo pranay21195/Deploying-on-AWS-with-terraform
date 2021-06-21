@@ -6,7 +6,7 @@ resource "aws_instance" "backendserver" {
   subnet_id = aws_subnet.subnet_2.id
   # Security Group
   vpc_security_group_ids = ["${aws_security_group.backend-sg.id}"]
-  key_name               = aws_key_pair.mastercard11.key_name
+  key_name               = aws_key_pair.zetakp.key_name
   # root disk
   root_block_device {
     volume_size           = "8"
@@ -36,7 +36,7 @@ resource "aws_instance" "frontendserver" {
   associate_public_ip_address = true
   # Security Group
   vpc_security_group_ids = ["${aws_security_group.frontend-sg.id}"]
-  key_name               = aws_key_pair.mastercard11.key_name
+  key_name               = aws_key_pair.zetakp.key_name
   user_data              = <<-EOF
     #!/bin/bash
     sudo yum update -y
@@ -67,8 +67,8 @@ resource "aws_instance" "frontendserver" {
     Name = "Frontendserver:"
   }
 }
-resource "aws_key_pair" "mastercard11" {
+resource "aws_key_pair" "zetakp" {
   provider   = aws.region-master
-  key_name   = "mastercard11"
-  public_key = file("mastercard11.pub")
+  key_name   = "zetakp"
+  public_key = file("zetakp.pub")
 }

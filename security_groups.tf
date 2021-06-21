@@ -2,7 +2,7 @@
 resource "aws_security_group" "backend-sg" {
   provider    = aws.region-master
   name        = "backend-sg"
-  description = "Allow TCP/80, TCP/443 & TCP/22"
+  description = "Allow nat gateway, TCP/80, TCP/443 & TCP/22"
   vpc_id      = aws_vpc.vpc_master.id
   tags = {
     Name = "BackendSG"
@@ -48,6 +48,13 @@ resource "aws_security_group" "backend-sg" {
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["10.0.2.0/24"]
+  }
+  egress {
+    description = "Nat gateway"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
 }

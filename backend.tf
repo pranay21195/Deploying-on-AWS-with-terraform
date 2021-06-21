@@ -4,7 +4,7 @@ terraform {
     region  = "ap-south-1"
     profile = "default"
     key     = "terraformstatefile"
-    bucket  = "mastercardtf"
+    bucket  = "zetatf"
   }
 }
 
