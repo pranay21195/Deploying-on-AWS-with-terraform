@@ -6,7 +6,7 @@ resource "aws_instance" "backendserver" {
   subnet_id = aws_subnet.subnet_2.id
   # Security Group
   vpc_security_group_ids = ["${aws_security_group.backend-sg.id}"]
-  key_name               = aws_key_pair.zetakp.key_name
+  key_name               = aws_key_pair.ecskp.key_name
   # root disk
   root_block_device {
     volume_size           = "8"
@@ -36,15 +36,52 @@ resource "aws_instance" "frontendserver" {
   associate_public_ip_address = true
   # Security Group
   vpc_security_group_ids = ["${aws_security_group.frontend-sg.id}"]
-  key_name               = aws_key_pair.zetakp.key_name
-  user_data              = <<-EOF
-    #!/bin/bash
-    sudo yum update -y
-    sudo yum install httpd -y
-    sudo systemctl enable httpd
-    sudo systemctl start httpd
-    echo "<html><body><div>Hello, world!</div></body></html>" > /var/www/html/index.html
-    EOF
+  key_name               = aws_key_pair.ecskp.key_name
+  user_data              = <<-EOT
+    #cloud-config
+# update apt on boot
+package_update: true
+# install nginx
+packages:
+- nginx
+write_files:
+- content: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>StackPath - Amazon Web Services Instance</title>
+      <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+      <style>
+        html, body {
+          background: #000;
+          height: 100%;
+          width: 100%;
+          padding: 0;
+          margin: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-flow: column;
+        }
+        img { width: 250px; }
+        svg { padding: 0 40px; }
+        p {
+          color: #fff;
+          font-family: 'Courier New', Courier, monospace;
+          text-align: center;
+          padding: 10px 30px;
+        }
+      </style>
+    </head>
+    <body>
+      <p>This request was proxied from <strong>Amazon Web Services</strong></p>
+    </body>
+    </html>
+  path: /usr/share/app/index.html
+  permissions: '0644'
+runcmd:
+- cp /usr/share/app/index.html /usr/share/nginx/html/index.html
+EOT
 
   # root disk
   root_block_device {
@@ -67,8 +104,8 @@ resource "aws_instance" "frontendserver" {
     Name = "Frontendserver:"
   }
 }
-resource "aws_key_pair" "zetakp" {
+resource "aws_key_pair" "ecskp" {
   provider   = aws.region-master
-  key_name   = "zetakp"
-  public_key = file("zetakp.pub")
+  key_name   = "ecskp"
+  public_key = file("ecskp.pub")
 }
