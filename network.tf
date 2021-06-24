@@ -5,7 +5,7 @@ resource "aws_vpc" "vpc_master" {
   enable_dns_support   = true
   enable_dns_hostnames = true
   tags = {
-    Name = "zeta-vpc"
+    Name = "ecs-vpc"
   }
 }
 
@@ -79,6 +79,11 @@ resource "aws_route_table_association" "prod-crta-public-subnet-11" {
   provider       = aws.region-master
   subnet_id      = aws_subnet.subnet_2.id
   route_table_id = aws_route_table.prod-public-crt.id
+}
+resource "aws_route_table_association" "prod-crta-private-subnet-1" {
+  provider       = aws.region-master
+  subnet_id      = aws_subnet.subnet_3.id
+  route_table_id = aws_route_table.nat_gateway_rt.id
 }
 
 
